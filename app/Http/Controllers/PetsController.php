@@ -22,9 +22,9 @@ class PetsController extends Controller
     public function store(Request $request){
         $data = $request->except('_method','_token','submit');
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'species'=> 'required',
-            'employee'=> 'required',
+            'employee_id' => 'required',
+            'species_id'=> 'required',
+            'pet_id'=> 'required',
          ]);
          $record = PetTables::firstOrCreate($data);
         // Employees::create([

@@ -57,15 +57,15 @@ Route::get('/ptindex', 'PetsController@index')->name('pet.index');
 
 Route::get('/Pets', 'PetsController@create')->name('pet.create');
 Route::post('/Pets', 'PetsController@store')->name('pet.store');
-Route::get('/Pets/edit/{pet}', 'PetsController@edit')->name('pet.edit');
-Route::post('/Pets/edit/{pet}', 'PetsController@update')->name('pet.update');
-Route::get('/Pets/delete/{pet}', 'PetsController@destroy')->name('pet.destroy');
-
-//PetTables
-Route::get('/ptabindex', 'PetTablesController@index')->name('pettab.index');
-
-Route::get('/Ptables', 'PetTablesController@create')->name('pettab.create');
-Route::post('/Ptables', 'PetTablesController@store')->name('pettab.store');
 // Route::get('/Pets/edit/{pet}', 'PetsController@edit')->name('pet.edit');
 // Route::post('/Pets/edit/{pet}', 'PetsController@update')->name('pet.update');
 // Route::get('/Pets/delete/{pet}', 'PetsController@destroy')->name('pet.destroy');
+
+//PetNames
+Route::get('/pnindex', 'PetNamesController@index')->name('pettab.index');
+
+Route::get('/Ptables', 'PetNamesController@create')->name('petname.create');
+Route::post('/Ptables', 'PetNamesController@store')->name('petname.store');
+Route::get('/PetName/edit/{petName}', 'PetNamesController@edit')->name('petname.edit');
+Route::post('/PetName/edit/{petName}', 'PetNamesController@update')->name('petname.update');
+Route::get('/PetName/delete/{petName}', 'PetNamesController@destroy')->name('petname.destroy');
