@@ -62,7 +62,15 @@
                     <a href="{{ route('employee.edit',[$employee->id]) }}" class="btn btn-sm btn-info">Edit</a>
                     <a href="{{ route('employee.destroy',$employee->id) }}" class="btn btn-sm btn-danger">Delete</a>  
                 </td>
-            <tr>
+                @foreach($employee->pets as $pets)
+                {{-- @php
+                    dd($pets);
+                @endphp --}}
+                <td>{{$pets->birthdate}}</td>
+                <td>{{$pets->petnames->name}}</td>
+                <td>{{$pets->species->name}}</td>
+                <td>{{$pets->employees->name}}</td>
+                @endforeach
         </tbody>
         @endforeach
     </table>
