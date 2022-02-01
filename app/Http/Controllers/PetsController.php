@@ -4,18 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pets;
+use App\PetNames;
 use Illuminate\Support\Facades\Validator;
 use App\Species;
 
 class PetsController extends Controller
 {
     public function index(){
-        $pettables = PetTables::select('id')->get();
-        return view('indexPetTables')->with('pettables',$pettables);
+        $pettables = Pets::all();//69->get();
+        
+        //for ($i=0;$i<count($pettables);$i++)
+        //{
+            //echo "Petname ".$pettables[$i]->petname()->name;
+            //print_r($pettables[$i]->petname());
+            //print_r($pettables[$i]);
+            //echo "<br/><br/>";
+        //}
+        return view('indexPetNames')->with('pettables',$pettables);
     }
     public function create(){
         $species = Species::select('id','name')->get();
-        $pets = Pets::select('id','name','birthdate')->get();
+        $pets = PetNames3::select('id','name','birthdate')->get();
         $employees = Employees::select('id','name')->get();
         return view('createPetTables')->with('species',$species)->with('pets',$pets)->with('employees',$employees);
     }
