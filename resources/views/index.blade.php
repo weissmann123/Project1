@@ -66,10 +66,12 @@
                 {{-- @php
                     dd($pets);
                 @endphp --}}
+                <tr>
                 <td>{{$pets->birthdate}}</td>
                 <td>{{$pets->petnames->name}}</td>
                 <td>{{$pets->species->name}}</td>
                 <td>{{$pets->employees->name}}</td>
+                </td>
                 @endforeach
         </tbody>
         @endforeach
