@@ -22,7 +22,7 @@
     </div>
 @endif
 <div class="row">
-    <form action="{{route('pettab.store')}}" method="POST">
+    <form action="{{route('petName.store')}}" method="POST">
     @csrf
     <div class="col-sm-4">
         <div class="left">

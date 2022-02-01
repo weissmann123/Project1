@@ -13,7 +13,7 @@
     </div>
     <div class="row" allign="left">
         <div class="pull-right">
-            <a class="btn btn-success" href="{{route('pettab.create')}}">Add Pets</a>
+            <a class="btn btn-success" href="{{route('petname.create')}}">Add Pets</a>
         </div>
         <div class="pull-right">
             <a class="btn btn-success" href="{{route('employee.index')}}">Employeee</a>
@@ -39,12 +39,12 @@
                     dd($employee->roles[0]->role);//tanpa nested loop
                 @endphp   --}}
                 @php
-                    dd($pettable);
+                   
                 @endphp
-                <td>{{$pettable->birthdate}}</td>
-                <td>{{$pettable->name}}</td>
-                <td></td>
-                <td></td>
+                <td>{{$pettable->petname()->birthdate}}</td>
+                <td>{{$pettable->petname()->name}}</td>
+                <td>{{$pettable->species()->name}}</td>
+                <td>{{$pettable->employees()->name}}</td>
                 {{-- <td>
                 @foreach($employee->roles as $role)
                 {{$role->role}},
