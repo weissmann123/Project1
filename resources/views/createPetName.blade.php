@@ -22,17 +22,17 @@
     </div>
 @endif
 <div class="row">
-    <form action="{{route('petName.store')}}" method="POST">
+    <form action="{{route('petname.store')}}" method="POST">
     @csrf
     <div class="col-sm-4">
         <div class="left">
             <strong>Pets</strong>
             <input type="text" name="name" class="form-control" placeholder="Pets">
         </div>
-        <div class="left">
+        {{-- <div class="left">
             <strong>Birthdate</strong>
             <input type="date" name="birthdate" class="form-control" placeholder="Birthdate">
-        </div>
+        </div> --}}
     <br>
     <div class=left>
         <button type="submit" class="btn btn-primary">Submit</button>

@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class PetNames extends Model
 {
-    public function species()
+    public function pets()
     {
-        return $this->HasMany('App\PetTables');
+        return $this->HasMany('App\Pets','petname_id','id');
     }
     protected $fillable = [
-        'id','name','birthdate'
+        'id','name',
     ];
 }
-
-//tabel petnames

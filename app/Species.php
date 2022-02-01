@@ -9,9 +9,11 @@ class Species extends Model
     //
     public function pets()
     {
-        return $this->hasMany('App\PetNames','species_id','id');
+        return $this->hasMany('App\Pets','species_id','id');
     }
     protected $fillable = [
         'id','name'
     ];
+    //Model = plural
+    //table column = singular
 }

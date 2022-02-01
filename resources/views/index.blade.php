@@ -24,6 +24,9 @@
         <div class="pull-right">
             <a class="btn btn-success" href="{{route('pet.index')}}">Pets</a>
         </div>
+        <div class="pull-right">
+            <a class="btn btn-success" href="{{route('petname.index')}}">PetNames</a>
+        </div>
     </div>
     @if($message = Session::get('success'))
         <div class="alert alert-success">
