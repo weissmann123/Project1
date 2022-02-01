@@ -29,7 +29,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Pets</th>
+                <th>Pet Name</th>
             </tr>
         </thead>
         @foreach($species as $species)
@@ -39,12 +39,11 @@
                 @endphp   --}}
                 <td>{{$species->id}}</td>
                 <td>{{$species->name}}</td>
-                <td></td>
-                {{-- <td>
-                @foreach($employee->roles as $role)
-                {{$role->role}},
+                <td>
+                @foreach ($species->pets as $pets)
+                    {{$pets->petnames->name}}
                 @endforeach
-                </td> --}}
+                </td>
                 <td>
                     <a href="{{ route('species.edit',[$species->id]) }}" class="btn btn-sm btn-info">Edit</a>
                     <a href="{{ route('species.destroy',$species->id) }}" class="btn btn-sm btn-danger">Delete</a>  

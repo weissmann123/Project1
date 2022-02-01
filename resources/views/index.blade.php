@@ -51,7 +51,7 @@
                 <td>{{$employee->id}}</td>
                 <td>{{$employee->name}}</td>
                 <td>{{$employee->email}}</td>
-                {{-- <td>{{$employee->role}}</td> --}}
+                {{-- <td>{{$employee->role}}</tds> --}}
                 {{-- <td>{{$data1}}</td> --}}
                 <td>
                 @foreach($employee->roles as $role)

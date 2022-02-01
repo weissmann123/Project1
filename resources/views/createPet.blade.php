@@ -26,14 +26,47 @@
     @csrf
     <div class="col-sm-4">
         <div class="left">
+            <strong>Birthdate</strong>
+            <input type="date" name="birthdate" class="form-control" placeholder="Date">
+        </div>
+
+        {{-- <div class="left">
             <strong>Pets</strong>
             <input type="text" name="name" class="form-control" placeholder="Pets">
-        </div>
+        </div> --}}
+
         <div class="left">
-            <strong>Birthdate</strong>
-            <input type="date" name="birthdate" class="form-control" placeholder="Birthdate">
+            <strong>Species</strong>
+            <br>
+             @foreach ($species as $species)
+             {{-- @php
+                 dd($species->id);
+             @endphp --}}
+                <input type="radio" name="species_id" value="{{$species->id}}">{{$species->name}}<br>
+            @endforeach
+        </div>
+        <br>
+        <div class="left">
+            <strong>Employees</strong>
+            <br>
+             @foreach ($employees as $employees)
+             {{-- @php
+                 dd($species->id);
+             @endphp --}}
+                <input type="radio" name="employee_id" value="{{$employees->id}}">{{$employees->name}}<br>
+            @endforeach
         </div>
     <br>
+    <div class="left">
+        <strong>Pet Names</strong>
+        <br>
+         @foreach ($petnames as $petnames)
+         {{-- @php
+             dd($species->id);
+         @endphp --}}
+            <input type="radio" name="petname_id" value="{{$petnames->id}}">{{$petnames->name}}<br>
+        @endforeach
+    </div>
     <div class=left>
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>

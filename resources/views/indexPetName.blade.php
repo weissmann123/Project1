@@ -29,6 +29,7 @@
             <tr>
                 <th>id</th>
                 <th>Name</th>
+                <th>Species</th>
             </tr>
         </thead>
         @foreach($petNames as $name)
@@ -41,6 +42,9 @@
                 @endphp
                 <td>{{$name->id}}</td>
                 <td>{{$name->name}}</td>
+                @foreach ($name->pets as $pets)
+                    <td>{{$pets->species->name}}</td>
+                @endforeach
                 {{-- <td>
                 @foreach($employee->roles as $role)
                 {{$role->role}},

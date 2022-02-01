@@ -13,7 +13,7 @@
     </div>
     <div class="row" allign="left">
         <div class="pull-right">
-            <a class="btn btn-success" href="{{route('petname.create')}}">Add Pets</a>
+            <a class="btn btn-success" href="{{route('pet.create')}}">Add Pets</a>
         </div>
         <div class="pull-right">
             <a class="btn btn-success" href="{{route('employee.index')}}">Employeee</a>
@@ -41,7 +41,7 @@
                     // dd($pets->petnames);
                 @endphp
                 {{-- <td>{{$pet->petname()->birthdate}}</td> --}}
-                <td>{{$pets->petnames->birthdate}}</td>
+                <td>{{$pets->birthdate}}</td>
                 <td>{{$pets->petnames->name}}</td>
                 <td>{{$pets->species->name}}</td>
                 <td>{{$pets->employees->name}}</td>
