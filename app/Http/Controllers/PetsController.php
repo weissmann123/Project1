@@ -34,3 +34,6 @@ class PetsController extends Controller
         return redirect()->route('pet.index')->with('success','role added');
     }
 }
+//DB::beginTransaction()
+//DB::commit()
+//DB::rollback()

@@ -6,6 +6,70 @@
             <div class="pull-left">
                 <h2>Employee Index</h2>
             </div>
+            {{--Demo JS--}}
+            {{-- <button onclick="document.getElementById('demo').innerHTML=Date()">The time is?</button> --}}
+            {{-- <p id="demo"></p> --}}
+            {{-- <style>
+                .class{
+                    background-color : red;
+                }
+                #id{
+                    background-color : blue;
+                }
+            </style> --}}
+            <h5>id = Blue, class = Red</h5>
+            <p id = "id"> Id</p>
+            <p class = "class"> Class</p>
+            <br>
+            <h5>Variabel print</h5>
+            <p id="script"></p>
+            <button onclick="script_function()">show_var</button>
+            <br>
+            <h5>Alert print</h5>
+            <button onclick="alert_function()">show_alert</button>
+            <br>
+            <h5>confirm print</h5>
+            <p id="confirm"></p>
+            <button onclick="confirm_function()">Confirm Button</button>
+            <h5>Log inspect</h5>
+            <button onclick="log_function()">show_log</button>
+            <h5>doc ready</h5>
+            <input type="button" id="test" value="click me"><br>
+            <script>
+                $('document').ready(function(){
+                    $('#test').click(function(){
+                        alert('button found and loaded');
+                        document.body.style.backgroundColor = "yellow";
+                    });
+                });
+                function script_function(){
+                    var a, b;
+                    a = "Hello";
+                    b = "World";
+                    // c = a + b;
+                    document.getElementById("script").innerHTML = a + " " + b;
+                }
+                function alert_function(){
+                    window.alert("Alert Button pressed");
+                }
+                function confirm_function(){
+                    var x;
+                    if(confirm("Select Option")){
+                        x = "Confirmed";
+                    }
+                    else{
+                        x = "Cancelled";
+                    }
+                    document.getElementById("confirm").innerHTML = x;
+                }
+                function log_function(){
+                    var z, x;
+                    z = "Hello";
+                    x = "World";
+                    console.log("Text = " + z + " " + x);
+                }
+            </script>
+            {{--/Demo JS--}}
             <div clas="pull-right">
                 <a class="btn btn-success" href="{{route('home')}}">Home</a>
             </div>
