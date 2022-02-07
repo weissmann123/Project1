@@ -69,4 +69,63 @@ class RolesController extends controller{
         $role->delete();
         return redirect()->route('role.index')->with('success','role deleted');
     }
-}
+    public function RoleDataTable(Request $request){
+    $column = array(
+        0 => 'id',
+        1 => 'role',
+        2 => 'user',
+        3 => 'menu',
+    );
+    // get param <-- ini fix g usa di rubah" 
+    $limit = $request->input('length');
+    $start = $request->input('start');
+    $search = $request->input('search.value');
+    $order = $column[$request->input('order.0.column')];
+    $dir   = $request->input('order.0.dir');
+    $draw = $request->input('draw');
+
+    $data = Roles::select('id','role','user');
+
+    $totalData = $data->count();
+    $totalFiltered = $totalData;
+
+    if (isset($search)) {
+        // mengikuti apa yang bisa d cari
+        $data->orWhere();
+        $totalFiltered = $data->count();
+    }
+
+    $data = $data->offset($start)
+    ->limit($limit)
+    ->get();
+
+    $array = [];
+    foreach ($data as $datas) {
+        // $array['customer'] = $transaction->user->first_name.' '.$transaction->user->last_name;
+        // $action = '';
+        // if () {
+        //     $action .= '<a href="'.asset('storage/'.$file->file_location).'" download>Download</a>';
+        // }
+        // $array['action'] = $action;
+        $array['id'] = $datas->id;
+        $array['role'] = $datas->role;
+        foreach ($datas->employees as $test){
+            // dd($test);
+            $array['user'] = $test->name;
+            // dd($array['user']);    
+        }
+        $array['menu'] = "<a href='{{ route('role.edit',$datas->id) }}' class='btn btn-sm btn-info'>Edit</a> 
+                          <a href='{{ route('role.destroy',$datas->id) }}' class='btn btn-sm btn-danger'>Delete</a>";
+        // $array['menu'] = "<button>CLICK ME</button>";
+    }
+    // ini juga fix
+    $json_data = [
+        'draw' => intval($draw),
+        'recordsTotal' => intval($totalData),
+        'recordsFiltered' => intval($totalFiltered),
+        'data' => $data->toArray(),
+    ];
+    // ini juga fix
+    return json_encode($json_data);
+        }
+    }

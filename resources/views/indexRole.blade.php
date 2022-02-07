@@ -1,5 +1,25 @@
 @extends('layouts.app')
-
+@section('script')
+<script>
+ 	$('document').ready(function(){
+        $('#tableRole').DataTable({
+            processing : true,
+            serverSide : true,
+            ajax : {
+                "url" : "{{route('RoleDataTable')}}",
+                "type" : "POST",
+                "data" : {_token : "{{csrf_token()}}"},
+            },
+            columns : [
+                {"data" : "id"},
+                {"data" : "role"},
+                {"data" : "user"},
+                {"data" : "menu"},
+            ]
+        });
+    });
+</script>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -21,7 +41,7 @@
             <p>{{$message}}</p>
         </div>
     @endif
-    <table class="table table-hover">
+    <table class="table table-hover" id="tableRole">
         <thead>
             <tr>
                 <th>ID</th>
@@ -30,8 +50,8 @@
                 <th>Menu</th>
             </tr>
         </thead>
-        @foreach($roles as $role)
         <tbody>
+            {{-- @foreach($roles as $role)
             <tr>    
                 <td>{{$role->id}}</td>
                 <td>{{$role->role}}</td>
@@ -44,8 +64,8 @@
                     <a href="{{ route('role.edit',[$role->id]) }}" class="btn btn-sm btn-info">Edit</a>
                     <a href="{{ route('role.destroy',$role->id) }}" class="btn btn-sm btn-danger">Delete</a>  
                 </td>
-            <tr>
+            </tr>
+            @endforeach --}}
         </tbody>
-        @endforeach
     </table>
 @endsection

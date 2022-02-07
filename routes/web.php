@@ -37,6 +37,8 @@ Route::get('/roles/edit/{role}','RolesController@edit')->name('role.edit');
 Route::post('/roles/update/{role}','RolesController@update')->name('role.update');
 Route::get('/roles/delete/{role}','RolesController@destroy')->name('role.destroy');
 
+Route::post('RoleDataTable','RolesController@RoleDataTable')->name('RoleDataTable');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
