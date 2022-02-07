@@ -84,7 +84,7 @@ class RolesController extends controller{
     $dir   = $request->input('order.0.dir');
     $draw = $request->input('draw');
 
-    $data = Roles::select('id','role','user');
+    $data = Roles::select('id','role');
 
     $totalData = $data->count();
     $totalFiltered = $totalData;
@@ -107,15 +107,17 @@ class RolesController extends controller{
         //     $action .= '<a href="'.asset('storage/'.$file->file_location).'" download>Download</a>';
         // }
         // $array['action'] = $action;
-        $array['id'] = $datas->id;
-        $array['role'] = $datas->role;
+        $nestedData['id'] = $datas->id;
+        $nestedData['role'] = $datas->role;
         foreach ($datas->employees as $test){
             // dd($test);
-            $array['user'] = $test->name;
+            $nestedData['user'][] = $test->name;
             // dd($array['user']);    
         }
-        $array['menu'] = "<a href='{{ route('role.edit',$datas->id) }}' class='btn btn-sm btn-info'>Edit</a> 
+        $nestedData['user'][] = " ";
+        $nestedData['menu'] = "<a href='{{ route('role.edit',$datas->id) }}' class='btn btn-sm btn-info'>Edit</a> 
                           <a href='{{ route('role.destroy',$datas->id) }}' class='btn btn-sm btn-danger'>Delete</a>";
+        $array[] = $nestedData;
         // $array['menu'] = "<button>CLICK ME</button>";
     }
     // ini juga fix
@@ -123,7 +125,7 @@ class RolesController extends controller{
         'draw' => intval($draw),
         'recordsTotal' => intval($totalData),
         'recordsFiltered' => intval($totalFiltered),
-        'data' => $data->toArray(),
+        'data' => $array,
     ];
     // ini juga fix
     return json_encode($json_data);
