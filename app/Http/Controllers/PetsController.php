@@ -33,7 +33,64 @@ class PetsController extends Controller
          $record = Pets::firstOrCreate($data);
         return redirect()->route('pet.index')->with('success','role added');
     }
-}
+    public function PetDataTable(Request $request){
+        $column = array(
+            0 => 'id',
+            1 => 'birthdate',
+            2 => 'name',
+            3 => 'species',
+            4 => 'employee',
+        );
+        // get param <-- ini fix g usa di rubah" 
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $search = $request->input('search.value');
+        $order = $column[$request->input('order.0.column')];
+        $dir   = $request->input('order.0.dir');
+        $draw = $request->input('draw');
+        
+        $data = Pets::select('id','birthdate','petname_id','species_id','employee_id');
+    
+        $totalData = $data->count();
+        $totalFiltered = $totalData;
+    
+        if (isset($search)) {
+            // mengikuti apa yang bisa d cari
+            $data->orWhere('id','LIKE',"%{$search}%");
+            $totalFiltered = $data->count();
+        }
+        // $user = User::select('id','name');
+        // if (isset($search)) {
+        //     // mengikuti apa yang bisa d cari
+        //     $user->orWhere('name','LIKE',"%{$search}%");
+        //     $totalFiltered = $user->count();
+        // }
+        $data = $data->offset($start)
+        ->limit($limit)
+        ->get();
+    
+        $array = [];
+        foreach ($data as $pet) {
+            $nestedData['id'] = $pet->id;
+            $nestedData['birthdate'] = $pet->birthdate;
+            $nestedData['name'] = $pet->petnames->name;
+            $nestedData['species'] = $pet->species->name;
+            $nestedData['employee'] = $pet->employees->name;
+            // dd($array);
+            $array[] = $nestedData;
+        }
+        // ini juga fix
+        $json_data = [
+            'draw' => intval($draw),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $array,
+            // 'data' => $data->toArray(),
+        ];
+        // ini juga fix
+        return json_encode($json_data);
+            }
+    }
 //DB::beginTransaction()
 //DB::commit()
 //DB::rollback()

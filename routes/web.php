@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('layout');
 // });
 
-
+Auth::routes();
 //Employee
 Route::get('/','EmployeesController@index');
 Route::get('/employees','EmployeesController@create')->name('employee.create');
@@ -39,7 +39,6 @@ Route::get('/roles/delete/{role}','RolesController@destroy')->name('role.destroy
 
 Route::post('RoleDataTable','RolesController@RoleDataTable')->name('RoleDataTable');
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home', 'HomeController@index')->name('home1');
@@ -59,6 +58,8 @@ Route::get('/ptindex', 'PetsController@index')->name('pet.index');
 
 Route::get('/Pets', 'PetsController@create')->name('pet.create');
 Route::post('/Pets', 'PetsController@store')->name('pet.store');
+
+Route::post('PetDataTable','PetsController@PetDataTable')->name('PetDataTable');
 // Route::get('/Pets/edit/{pet}', 'PetsController@edit')->name('pet.edit');
 // Route::post('/Pets/edit/{pet}', 'PetsController@update')->name('pet.update');
 // Route::get('/Pets/delete/{pet}', 'PetsController@destroy')->name('pet.destroy');

@@ -15,6 +15,8 @@
                 {"data" : "role"},
                 {"data" : "user"},
                 {"data" : "menu"},
+                // {"data" : "user[, ]"},
+                // {"data" : "menu[, ]"},
             ]
         });
     });

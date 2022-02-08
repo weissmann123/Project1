@@ -1,5 +1,28 @@
 @extends('layouts.app')
-
+@section('script')
+<script>
+ 	$('document').ready(function(){
+        $('#tablePet').DataTable({
+            processing : true,
+            serverSide : true,
+            ajax : {
+                "url" : "{{route('PetDataTable')}}",
+                "type" : "POST",
+                "data" : {_token : "{{csrf_token()}}"},
+            },
+            columns : [
+                {"data" : "id"},
+                {"data" : "birthdate"},
+                {"data" : "name"},
+                {"data" : "species"},
+                {"data" : "employee"},
+                // {"data" : "user[, ]"},
+                // {"data" : "menu[, ]"},
+            ]
+        });
+    });
+</script>
+ @endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -24,27 +47,28 @@
             <p>{{$message}}</p>
         </div>
     @endif
-    <table class="table table-hover">
+    <table class="table table-hover" id="tablePet">
         <thead>
             <tr>
-                <th>Birthdate</th>
-                <th>Name</th>
-                <th>Species</th>
-                <th>Employee</th>
+                <th width="20%">ID</th>
+                <th width="20%">Birthdate</th>
+                <th width="20%">Name</th>
+                <th width="20%">Species</th>
+                <th width="20%">Employee</th>
             </tr>
         </thead>
-        @foreach($pets as $pets)
-        <tbody>   
+        <tbody> 
+            {{-- @foreach($pets as $pets)  
                 @php
                     // dd($pet);
                     // dd($pet->petnames);
                     // dd($pets->petnames);
                 @endphp
                 {{-- <td>{{$pet->petname()->birthdate}}</td> --}}
-                <td>{{$pets->birthdate}}</td>
+                {{-- <td>{{$pets->birthdate}}</td>
                 <td>{{$pets->petnames->name}}</td>
                 <td>{{$pets->species->name}}</td>
-                <td>{{$pets->employees->name}}</td>
+                <td>{{$pets->employees->name}}</td> --}}
                 {{-- <td>
                 @foreach($employee->roles as $role)
                 {{$role->role}},
@@ -53,9 +77,8 @@
                 {{-- <td>
                     <a href="{{ route('pet.edit',[$pet->id]) }}" class="btn btn-sm btn-info">Edit</a>
                     <a href="{{ route('pet.destroy',$pet->id) }}" class="btn btn-sm btn-danger">Delete</a>  
-                </td> --}}
-            <tr>
+                </td> --
+                @endforeach --}}
         </tbody>
-        @endforeach
     </table>
 @endsection

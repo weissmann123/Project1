@@ -83,7 +83,7 @@ class RolesController extends controller{
     $order = $column[$request->input('order.0.column')];
     $dir   = $request->input('order.0.dir');
     $draw = $request->input('draw');
-
+    
     $data = Roles::select('id','role');
 
     $totalData = $data->count();
@@ -91,34 +91,47 @@ class RolesController extends controller{
 
     if (isset($search)) {
         // mengikuti apa yang bisa d cari
-        $data->orWhere();
+        $data->orWhere('role','LIKE',"%{$search}%");
         $totalFiltered = $data->count();
     }
-
+    // $user = User::select('id','name');
+    // if (isset($search)) {
+    //     // mengikuti apa yang bisa d cari
+    //     $user->orWhere('name','LIKE',"%{$search}%");
+    //     $totalFiltered = $user->count();
+    // }
     $data = $data->offset($start)
     ->limit($limit)
     ->get();
 
     $array = [];
-    foreach ($data as $datas) {
-        // $array['customer'] = $transaction->user->first_name.' '.$transaction->user->last_name;
-        // $action = '';
-        // if () {
-        //     $action .= '<a href="'.asset('storage/'.$file->file_location).'" download>Download</a>';
-        // }
-        // $array['action'] = $action;
-        $nestedData['id'] = $datas->id;
-        $nestedData['role'] = $datas->role;
-        foreach ($datas->employees as $test){
+    foreach ($data as $role) {
+        $count = 0;
+        $nestedData['id'] = $role->id;
+        $nestedData['role'] = $role->role;
+        foreach ($role->employees as $test){
             // dd($test);
-            $nestedData['user'][] = $test->name;
+            $nestedData['user'][$count++] = $test->name;
+            // $count++;
             // dd($array['user']);    
         }
-        $nestedData['user'][] = " ";
-        $nestedData['menu'] = "<a href='{{ route('role.edit',$datas->id) }}' class='btn btn-sm btn-info'>Edit</a> 
-                          <a href='{{ route('role.destroy',$datas->id) }}' class='btn btn-sm btn-danger'>Delete</a>";
+        $edit = route('role.edit',$role->id);
+        $delete = route('role.destroy',$role->id);
+        $nestedData['menu'] = "<a href='{$edit}' class='btn btn-sm btn-info'>Edit</a> 
+                                <a href='{$delete}' class='btn btn-sm btn-danger'>Delete</a>";
         $array[] = $nestedData;
-        // $array['menu'] = "<button>CLICK ME</button>";
+        $count = 0;
+        // $count = 0;
+        // $array['id'] = $datas->id;
+        // $array['role'] = $datas->role;
+        // foreach ($datas->employees as $test){
+        //     // dd($test);
+        //     $array['user'][$count] = $test->name;
+        //     $count++;
+        //     // dd($array['user']);    
+        // }
+        // $array['menu'] = "<a href='{{ route('role.edit',$datas->id) }}' class='btn btn-sm btn-info'>Edit</a> 
+        //                   <a href='{{ route('role.destroy',$datas->id) }}' class='btn btn-sm btn-danger'>Delete</a>";
     }
     // ini juga fix
     $json_data = [
@@ -126,6 +139,7 @@ class RolesController extends controller{
         'recordsTotal' => intval($totalData),
         'recordsFiltered' => intval($totalFiltered),
         'data' => $array,
+        // 'data' => $data->toArray(),
     ];
     // ini juga fix
     return json_encode($json_data);

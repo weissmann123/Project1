@@ -21,7 +21,6 @@
     </div>
 @endif
 @php
-    dd($role);
 @endphp
 <div class="row">
     <form action="{{route('role.update', [$role->id])}}" method="POST">
