@@ -53,4 +53,67 @@ class SpeciesController extends Controller
         $species->delete();
         return redirect()->route('species.index')->with('success','role deleted');
     }
-}
+    public function SpeciesDataTable(Request $request){
+        $column = array(
+            0 => 'id',
+            1 => 'name',
+            2 => 'petname',
+            3 => 'menu',
+        );
+        // get param <-- ini fix g usa di rubah" 
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $search = $request->input('search.value');
+        $order = $column[$request->input('order.0.column')];
+        $dir   = $request->input('order.0.dir');
+        $draw = $request->input('draw');
+        
+        $data = Species::select('id','name');
+    
+        $totalData = $data->count();
+        $totalFiltered = $totalData;
+    
+        if (isset($search)) {
+            // mengikuti apa yang bisa d cari
+            $data->orWhere('name','LIKE',"%{$search}%");
+            $totalFiltered = $data->count();
+        }
+        // $user = User::select('id','name');
+        // if (isset($search)) {
+        //     // mengikuti apa yang bisa d cari
+        //     $user->orWhere('name','LIKE',"%{$search}%");
+        //     $totalFiltered = $user->count();
+        // }
+        $data = $data->offset($start)
+        ->limit($limit)
+        ->get();
+    
+        $array = [];
+        foreach ($data as $species) {
+            $count = 0;
+            $nestedData['id'] = $species->id;
+            $nestedData['name'] = $species->name;
+            foreach ($species->pets as $pet){
+                // dd($test);
+                $nestedData['petname'][$count++] = $pet->petnames->name;
+                // $count++;
+                // dd($array['user']);    
+            }
+            $edit = route('species.edit',$species->id);
+            $delete = route('species.destroy',$species->id);
+            $nestedData['menu'] = "<a href='{$edit}' class='btn btn-sm btn-info'>Edit</a> 
+                                    <a href='{$delete}' class='btn btn-sm btn-danger'>Delete</a>";
+            $array[] = $nestedData;
+        }
+        // ini juga fix
+        $json_data = [
+            'draw' => intval($draw),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $array,
+            // 'data' => $data->toArray(),
+        ];
+        // ini juga fix
+        return json_encode($json_data);
+            }
+        }

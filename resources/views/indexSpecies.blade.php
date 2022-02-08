@@ -1,5 +1,27 @@
 @extends('layouts.app')
-
+@section('script')
+<script>
+    $('document').ready(function(){
+       $('#tableSpecies').DataTable({
+           processing : true,
+           serverSide : true,
+           ajax : {
+               "url" : "{{route('SpeciesDataTable')}}",
+               "type" : "POST",
+               "data" : {_token : "{{csrf_token()}}"},
+           },
+           columns : [
+               {"data" : "id"},
+               {"data" : "name"},
+               {"data" : "petname"},
+               {"data" : "menu"},
+               // {"data" : "user[, ]"},
+               // {"data" : "menu[, ]"},
+           ]
+       });
+   });
+</script>
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -24,19 +46,20 @@
             <p>{{$message}}</p>
         </div>
     @endif
-    <table class="table table-hover">
+    <table class="table table-hover" id="tableSpecies">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Pet Name</th>
+                <th>Menu</th>
             </tr>
         </thead>
-        @foreach($species as $species)
-        <tbody>   
+        <tbody> 
+            {{-- @foreach($species as $species)  
                 {{-- @php
                     dd($employee->roles[0]->role);//tanpa nested loop
-                @endphp   --}}
+                @endphp 
                 <td>{{$species->id}}</td>
                 <td>{{$species->name}}</td>
                 <td>
@@ -48,8 +71,7 @@
                     <a href="{{ route('species.edit',[$species->id]) }}" class="btn btn-sm btn-info">Edit</a>
                     <a href="{{ route('species.destroy',$species->id) }}" class="btn btn-sm btn-danger">Delete</a>  
                 </td>
-            <tr>
+                @endforeach --}}
         </tbody>
-        @endforeach
     </table>
 @endsection

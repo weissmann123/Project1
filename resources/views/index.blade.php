@@ -1,5 +1,29 @@
 @extends('layouts.app')
-
+@section('script')
+<script>
+ 	$('document').ready(function(){
+        $('#tableUser').DataTable({
+            processing : true,
+            serverSide : true,
+            ajax : {
+                "url" : "{{route('UserDataTable')}}",
+                "type" : "POST",
+                "data" : {_token : "{{csrf_token()}}"},
+            },
+            columns : [
+                {"data" : "id"},
+                {"data" : "name"},
+                {"data" : "email"},
+                {"data" : "role"},
+                {"data" : "pet"},
+                {"data" : "menu"},
+                // {"data" : "user[, ]"},
+                // {"data" : "menu[, ]"},
+            ]
+        });
+    });
+</script>
+ @endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -97,26 +121,22 @@
             <p>{{$message}}</p>
         </div>
     @endif
-    <table class="table table-hover">
+    <table class="table table-hover" id="tableUser">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Roles</th>
+                <th>Pet</th>
                 <th>Menu</th>
             </tr>
         </thead>
-        @foreach($employees as $employee)
-        <tbody>   
-                {{-- @php
-                    dd($employee->roles[0]->role);//tanpa nested loop
-                @endphp   --}}
+        <tbody> 
+            {{-- @foreach($employees as $employee)  
                 <td>{{$employee->id}}</td>
                 <td>{{$employee->name}}</td>
                 <td>{{$employee->email}}</td>
-                {{-- <td>{{$employee->role}}</tds> --}}
-                {{-- <td>{{$data1}}</td> --}}
                 <td>
                 @foreach($employee->roles as $role)
                 {{$role->role}},
@@ -127,9 +147,6 @@
                     <a href="{{ route('employee.destroy',$employee->id) }}" class="btn btn-sm btn-danger">Delete</a>  
                 </td>
                 @foreach($employee->pets as $pets)
-                {{-- @php
-                    dd($pets);
-                @endphp --}}
                 <tr>
                 <td>{{$pets->birthdate}}</td>
                 <td>{{$pets->petnames->name}}</td>
@@ -137,7 +154,7 @@
                 <td>{{$pets->employees->name}}</td>
                 </td>
                 @endforeach
+            @endforeach --}}
         </tbody>
-        @endforeach
     </table>
 @endsection

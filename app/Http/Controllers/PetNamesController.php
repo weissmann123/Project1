@@ -64,4 +64,65 @@ class PetNamesController extends Controller
         // $petname->delete();
         return redirect()->route('petname.index')->with('success','pet name deleted');
     }
-}
+    public function PetNameDataTable(Request $request){
+        $column = array(
+            0 => 'id',
+            1 => 'name',
+            2 => 'species',
+            3 => 'menu',
+        );
+        // get param <-- ini fix g usa di rubah" 
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $search = $request->input('search.value');
+        $order = $column[$request->input('order.0.column')];
+        $dir   = $request->input('order.0.dir');
+        $draw = $request->input('draw');
+        
+        $data = PetNames::select('id','name');
+    
+        $totalData = $data->count();
+        $totalFiltered = $totalData;
+    
+        if (isset($search)) {
+            // mengikuti apa yang bisa d cari
+            $data->orWhere('name','LIKE',"%{$search}%");
+            $totalFiltered = $data->count();
+        }
+        // $user = User::select('id','name');
+        // if (isset($search)) {
+        //     // mengikuti apa yang bisa d cari
+        //     $user->orWhere('name','LIKE',"%{$search}%");
+        //     $totalFiltered = $user->count();
+        // }
+        $data = $data->offset($start)
+        ->limit($limit)
+        ->get();
+    
+        $array = [];
+        foreach($data as $petname) {
+            $count = 0;
+            $nestedData['id'] = $petname->id;
+            $nestedData['name'] = $petname->name;
+            foreach($petname->pets as $pets){
+                $nestedData['species'][$count++] = $pets->species->name;
+            }
+            $edit = route('petname.edit',$petname->id);
+            $delete = route('petname.destroy',$petname->id);
+            $nestedData['menu'] = "<a href='{$edit}' class='btn btn-sm btn-info'>Edit</a> 
+                                    <a href='{$delete}' class='btn btn-sm btn-danger'>Delete</a>";
+            // dd($array);
+            $array[] = $nestedData;
+        }
+        // ini juga fix
+        $json_data = [
+            'draw' => intval($draw),
+            'recordsTotal' => intval($totalData),
+            'recordsFiltered' => intval($totalFiltered),
+            'data' => $array,
+            // 'data' => $data->toArray(),
+        ];
+        // ini juga fix
+        return json_encode($json_data);
+            }
+    }

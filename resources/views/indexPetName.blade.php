@@ -1,5 +1,27 @@
 @extends('layouts.app')
-
+@section('script')
+<script>
+ 	$('document').ready(function(){
+        $('#tablePetName').DataTable({
+            processing : true,
+            serverSide : true,
+            ajax : {
+                "url" : "{{route('PetNameDataTable')}}",
+                "type" : "POST",
+                "data" : {_token : "{{csrf_token()}}"},
+            },
+            columns : [
+                {"data" : "id"},
+                {"data" : "name"},
+                {"data" : "species"},
+                {"data" : "menu"},
+                // {"data" : "user[, ]"},
+                // {"data" : "menu[, ]"},
+            ]
+        });
+    });
+</script>
+ @endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -24,19 +46,20 @@
             <p>{{$message}}</p>
         </div>
     @endif
-    <table class="table table-hover">
+    <table class="table table-hover" id="tablePetName">
         <thead>
             <tr>
                 <th>id</th>
                 <th>Name</th>
                 <th>Species</th>
+                <th>Menu</th>
             </tr>
         </thead>
-        @foreach($petNames as $name)
-        <tbody>   
+        <tbody> 
+            {{-- @foreach($petNames as $name)  
                 {{-- @php
                     dd($employee->roles[0]->role);//tanpa nested loop
-                @endphp   --}}
+                @endphp
                 @php
                 //    dd($name->name);
                 @endphp
@@ -45,11 +68,6 @@
                 @foreach ($name->pets as $pets)
                     <td>{{$pets->species->name}}</td>
                 @endforeach
-                {{-- <td>
-                @foreach($employee->roles as $role)
-                {{$role->role}},
-                @endforeach
-                </td> --}}
                 <td>
                     @php
                         // dd($name->id);
@@ -58,7 +76,7 @@
                     <a href="{{ route('petname.destroy',$name->id) }}" class="btn btn-sm btn-danger">Delete</a>  
                 </td>
             <tr>
+            @endforeach --}}
         </tbody>
-        @endforeach
     </table>
 @endsection

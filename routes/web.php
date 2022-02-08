@@ -28,6 +28,8 @@ Route::get('/employees/edit/{employee}','EmployeesController@edit')->name('emplo
 Route::post('/employees/update/{employee}','EmployeesController@update')->name('employee.update');
 Route::get('/employees/delete/{employee}','EmployeesController@destroy')->name('employee.destroy');
 
+Route::post('UserDataTable','EmployeesController@UserDataTable')->name('UserDataTable');
+
 //Role
 Route::get('/roles','RolesController@create')->name('role.create');
 Route::post('/roles','RolesController@store')->name('role.store');
@@ -53,6 +55,8 @@ Route::get('/Species/edit/{species}', 'SpeciesController@edit')->name('species.e
 Route::post('/Species/edit/{species}', 'SpeciesController@update')->name('species.update');
 Route::get('/Species/delete/{species}', 'SpeciesController@destroy')->name('species.destroy');
 
+Route::post('SpeciesDataTable','SpeciesController@SpeciesDataTable')->name('SpeciesDataTable');
+
 //Pets
 Route::get('/ptindex', 'PetsController@index')->name('pet.index');
 
@@ -72,3 +76,5 @@ Route::post('/PNames', 'PetNamesController@store')->name('petname.store');
 Route::get('/PetName/edit/{petName}', 'PetNamesController@edit')->name('petname.edit');
 Route::post('/PetName/update/{petName}', 'PetNamesController@update')->name('petname.update');
 Route::get('/PetName/delete/{petName}', 'PetNamesController@destroy')->name('petname.destroy');
+
+Route::post('PetNameDataTable','PetNamesController@PetNameDataTable')->name('PetNameDataTable');
