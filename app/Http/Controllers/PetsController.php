@@ -14,7 +14,8 @@ class PetsController extends Controller
     public function index(){
         $pets = Pets::all();
         // dd($pets);
-        return view('indexPet')->with('pets',$pets);
+        $species = Species::select('id','name')->get();
+        return view('indexPet')->with('pets',$pets)->with('species',$species);
     }
     public function create(){
         $species = Species::select('id','name')->get();

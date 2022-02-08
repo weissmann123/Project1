@@ -20,7 +20,14 @@
                 // {"data" : "menu[, ]"},
             ]
         });
+        $("#tablePet_filter.dataTables_filter").append($("#species_filter"));
     });
+
+    // //client side
+    // var categoryIndex = 0;
+    // $("#dataTabel th").each(function(i){
+
+    // })
 </script>
  @endsection
 @section('content')
@@ -42,6 +49,16 @@
             <a class="btn btn-success" href="{{route('employee.index')}}">Employeee</a>
         </div>
     </div>
+
+    <div allign="center">
+        <select id="species_filter">
+            <option value = "">Show All</option>
+        @foreach($species as $species)  
+            <option value="{{$species->id}}">{{$species->name}}</option>
+          @endforeach
+        </select>
+      </div>
+      
     @if($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{$message}}</p>
