@@ -71,6 +71,12 @@ class PetsController extends Controller
             {
                 $data->orwhere('petname_id','LIKE',"%{$petname->id}%");// orwhere biasanya dipakai setelah where
             }
+
+            $users = User::orwhere('name','LIKE',"%{$search}%")->get();
+            foreach($users as $user)
+            {
+                $data->orwhere('employee_id','LIKE',"%{$user->id}%");// orwhere biasanya dipakai setelah where
+            }
             $totalFiltered = $data->count();
         }
         $data = $data->offset($start)

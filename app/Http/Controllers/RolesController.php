@@ -120,7 +120,6 @@ class RolesController extends controller{
         $nestedData['menu'] = "<a href='{$edit}' class='btn btn-sm btn-info'>Edit</a> 
                                 <a href='{$delete}' class='btn btn-sm btn-danger'>Delete</a>";
         $array[] = $nestedData;
-        $count = 0;
         // $count = 0;
         // $array['id'] = $datas->id;
         // $array['role'] = $datas->role;
