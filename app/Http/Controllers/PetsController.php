@@ -49,23 +49,30 @@ class PetsController extends Controller
         $order = $column[$request->input('order.0.column')];
         $dir   = $request->input('order.0.dir');
         $draw = $request->input('draw');
+
+        //buat filter dropdown
+        $filter = $request->input('filter_option');
         
         $data = Pets::select('id','birthdate','petname_id','species_id','employee_id');
-    
         $totalData = $data->count();
         $totalFiltered = $totalData;
-    
-        if (isset($search)) {
+        
+        //buat dropdown
+        if (isset($filter)) 
+        {
             // mengikuti apa yang bisa d cari
-            $data->orWhere('id','LIKE',"%{$search}%");
+            $data->orWhere('species_id','LIKE',"%{$filter}%");
             $totalFiltered = $data->count();
         }
-        // $user = User::select('id','name');
-        // if (isset($search)) {
-        //     // mengikuti apa yang bisa d cari
-        //     $user->orWhere('name','LIKE',"%{$search}%");
-        //     $totalFiltered = $user->count();
-        // }
+        if (isset($search)) {
+            $data->orWhere('birthdate','LIKE',"%{$search}%");
+            $petnames = PetNames::orwhere('name','LIKE',"%{$search}%")->get();
+            foreach($petnames as $petname)
+            {
+                $data->orwhere('petname_id','LIKE',"%{$petname->id}%");// orwhere biasanya dipakai setelah where
+            }
+            $totalFiltered = $data->count();
+        }
         $data = $data->offset($start)
         ->limit($limit)
         ->get();

@@ -2,13 +2,18 @@
 @section('script')
 <script>
  	$('document').ready(function(){
-        $('#tablePet').DataTable({
+        var table = $('#tablePet').DataTable({
             processing : true,
             serverSide : true,
             ajax : {
                 "url" : "{{route('PetDataTable')}}",
                 "type" : "POST",
-                "data" : {_token : "{{csrf_token()}}"},
+                "data": function ( d ) {
+                        return $.extend( {}, d, {
+                            "filter_option": $("#species_filter").val(),
+                             _token: "{{csrf_token()}}"
+                        });
+                    }
             },
             columns : [
                 {"data" : "id"},
@@ -19,10 +24,14 @@
                 // {"data" : "user[, ]"},
                 // {"data" : "menu[, ]"},
             ]
+            
         });
         $("#tablePet_filter.dataTables_filter").append($("#species_filter"));
+            $('#species_filter').bind("keyup change", function(){
+            table.draw();//tampil ulang isi datatable
+         });
     });
-
+    
     // //client side
     // var categoryIndex = 0;
     // $("#dataTabel th").each(function(i){
