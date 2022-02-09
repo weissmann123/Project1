@@ -90,15 +90,16 @@ class SpeciesController extends Controller
     
         $array = [];
         foreach ($data as $species) {
-            $count = 0;
+            $count = [];
             $nestedData['id'] = $species->id;
             $nestedData['name'] = $species->name;
             foreach ($species->pets as $pet){
                 // dd($test);
-                $nestedData['petname'][$count++] = $pet->petnames->name;
+                $count[] = $pet->petnames->name;
                 // $count++;
                 // dd($array['user']);    
             }
+            $nestedData['petname'] = $count;
             $edit = route('species.edit',$species->id);
             $delete = route('species.destroy',$species->id);
             $nestedData['menu'] = "<a href='{$edit}' class='btn btn-sm btn-info'>Edit</a> 

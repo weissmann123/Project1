@@ -109,12 +109,14 @@ class RolesController extends controller{
         $count = 0;
         $nestedData['id'] = $role->id;
         $nestedData['role'] = $role->role;
+        $user = [];
         foreach ($role->employees as $test){
             // dd($test);
-            $nestedData['user'][$count++] = $test->name;
+            $user[] = $test->name;
             // $count++;
             // dd($array['user']);    
         }
+        $nestedData['user'] = $user;
         $edit = route('role.edit',$role->id);
         $delete = route('role.destroy',$role->id);
         $nestedData['menu'] = "<a href='{$edit}' class='btn btn-sm btn-info'>Edit</a> 

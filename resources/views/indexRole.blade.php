@@ -13,7 +13,7 @@
             columns : [
                 {"data" : "id"},
                 {"data" : "role"},
-                {"data" : "user"},
+                {"data" : "user[, ]"},
                 {"data" : "menu"},
                 // {"data" : "user[, ]"},
                 // {"data" : "menu[, ]"},

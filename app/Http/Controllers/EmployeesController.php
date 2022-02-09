@@ -99,19 +99,20 @@ class EmployeesController extends Controller
     
         $array = [];
         foreach($data as $employees) {
-            $count1 = 0;
-            $count2 = 0;
             $nestedData['id'] = $employees->id;
             $nestedData['name'] = $employees->name;
             $nestedData['email'] = $employees->email;
+            
+            $count1 = [];
             foreach($employees->roles as $role){
-                $nestedData['role'][$count1++] = $role->role;
+                $count1[] = $role->role;
             }
+            $nestedData['role'] = $count1;
+            $count2 = [];
             foreach($employees->pets as $pets){
-                $nestedData['pet'][$count2++] = $pets->birthdate;
-                $nestedData['pet'][$count2++] = $pets->petnames->name;
-                $nestedData['pet'][$count2++] = $pets->species->name;
+                $count2[] = [$pets->birthdate, $pets->petnames->name, $pets->species->name];
             }
+            $nestedData['pet'] = $count2;
             $edit = route('employee.edit',$employees->id);
             $delete = route('employee.destroy',$employees->id);
             $nestedData['menu'] = "<a href='{$edit}' class='btn btn-sm btn-info'>Edit</a> 

@@ -101,12 +101,13 @@ class PetNamesController extends Controller
     
         $array = [];
         foreach($data as $petname) {
-            $count = 0;
             $nestedData['id'] = $petname->id;
             $nestedData['name'] = $petname->name;
+            $count = [];
             foreach($petname->pets as $pets){
-                $nestedData['species'][$count++] = $pets->species->name;
+                $count[] = $pets->species->name;
             }
+            $nestedData['species'] = $count;
             $edit = route('petname.edit',$petname->id);
             $delete = route('petname.destroy',$petname->id);
             $nestedData['menu'] = "<a href='{$edit}' class='btn btn-sm btn-info'>Edit</a> 
